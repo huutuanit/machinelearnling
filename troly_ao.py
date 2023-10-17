@@ -7,7 +7,8 @@ robot_mounth = ptt.init()
 robot_brain = "I'm robot"
 you = "Hello"
 
-def _listen():
+while True:
+    #  listen:
     with sr.Microphone() as mic:
         print("Robot: I'm listening.")
         audio = robot_ear.listen(mic)
@@ -17,7 +18,7 @@ def _listen():
         you = "" 
     print("You: " + you)
 
-def _thingking():
+    # thingking:
     print("Robot: ...")
     if you == "":
         robot_brain = "I can't hear you, try again"
@@ -29,18 +30,19 @@ def _thingking():
         robot_brain = "the time is " + datetime.today().strftime('%H:%M') 
     elif "bye" in you:
         robot_brain = "Good bye"
-        _answer()
-        exit()
+        robot_mounth.say(robot_brain)
+        robot_mounth.runAndWait()
+        break
     else:
         robot_brain = "I cannot understand what you say, Please try again."
     print("Robot: " + robot_brain)
 
-def _answer(): 
+    # answer: 
     robot_mounth.say(robot_brain)
     robot_mounth.runAndWait()
 
-# Main process
-while True:
-    _listen()
-    _thingking()
-    _answer()
+# # Main process
+# while True:
+#     _listen()
+#     _thingking()
+#     _answer()
