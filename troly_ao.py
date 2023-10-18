@@ -4,11 +4,11 @@ from datetime import datetime
 
 robot_ear = sr.Recognizer() 
 robot_mounth = ptt.init()
-robot_brain = "I'm robot"
-you = "Hello"
+you = ""
+robot_brain = "I can't hear you voice."
 
-while True:
-    #  listen:
+def _listen():
+    global you
     with sr.Microphone() as mic:
         print("Robot: I'm listening.")
         audio = robot_ear.listen(mic)
@@ -16,9 +16,10 @@ while True:
         you = robot_ear.recognize_google(audio)
     except:
         you = "" 
-    print("You: " + you)
+    print("You: " + you)    
 
-    # thingking:
+def _thingking():
+    global robot_brain
     print("Robot: ...")
     if you == "":
         robot_brain = "I can't hear you, try again"
@@ -32,17 +33,17 @@ while True:
         robot_brain = "Good bye"
         robot_mounth.say(robot_brain)
         robot_mounth.runAndWait()
-        break
+        exit()
     else:
         robot_brain = "I cannot understand what you say, Please try again."
     print("Robot: " + robot_brain)
 
-    # answer: 
+def _answer(): 
     robot_mounth.say(robot_brain)
     robot_mounth.runAndWait()
 
-# # Main process
-# while True:
-#     _listen()
-#     _thingking()
-#     _answer()
+# Main process
+while True:
+    _listen()
+    _thingking()
+    _answer()
